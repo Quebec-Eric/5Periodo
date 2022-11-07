@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>781</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>opa</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>0</y>
+      <width>87</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clique aq</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>781</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_14">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_15">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>opa</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuTomasulo">
+    <property name="title">
+     <string>Tomasulo</string>
+    </property>
+   </widget>
+   <addaction name="menuTomasulo"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
