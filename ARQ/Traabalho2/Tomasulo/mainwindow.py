@@ -2,6 +2,8 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtCore import pyqtSlot as Slot
+
 
 # Important:
 # You need to run the following command to generate the ui_form.py file
@@ -35,9 +37,10 @@ def reservationStations(self):
 def fpRegisterStatus(self):
     self.ui.label_21.setText('Recoder'+toSrintg())
     self.ui.label_23.setText('Busy'+toSrintg())
+    
+
 
 class MainWindow(QMainWindow):
-
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -47,7 +50,7 @@ class MainWindow(QMainWindow):
         roderBuffer(self)
         reservationStations(self)
         fpRegisterStatus(self)
-      
+        
 
    
 
@@ -57,3 +60,7 @@ if __name__ == "__main__":
     widget = MainWindow()
     widget.show()
     sys.exit(app.exec())
+
+
+
+
