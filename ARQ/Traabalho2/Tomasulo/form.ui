@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>805</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,57 +20,97 @@
       <x>10</x>
       <y>20</y>
       <width>781</width>
-      <height>141</height>
+      <height>212</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="3" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="label_5">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
        <property name="text">
-        <string>TextLabel</string>
+        <string>NULL</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
       <widget class="QLabel" name="label_4">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
        <property name="text">
-        <string>TextLabel</string>
+        <string>NULL</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_6">
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_9">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
        <property name="text">
-        <string>TextLabel</string>
+        <string>NULL</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(246, 245, 244);</string>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="label">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
        <property name="text">
-        <string>opa</string>
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>Entry              Busy                    Instruction                                    State                            Destination                              Value</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>                                                                                               REORDER        BUFFER </string>
        </property>
       </widget>
      </item>
@@ -79,8 +119,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>0</y>
+      <x>350</x>
+      <y>600</y>
       <width>87</width>
       <height>26</height>
      </rect>
@@ -93,59 +133,151 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>200</y>
+      <y>250</y>
       <width>781</width>
-      <height>141</height>
+      <height>231</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_11">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(246, 245, 244);</string>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_12">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(246, 245, 244);</string>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_13">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(246, 245, 244);</string>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
       <widget class="QLabel" name="label_14">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
        <property name="text">
-        <string>TextLabel</string>
+        <string>NULL</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_24">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_26">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="label_15">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
        <property name="text">
-        <string>opa</string>
+        <string>Name          Busy                   OP                    Vj                                  VK                                    Qj              Qk              Dest              A</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_25">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_27">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>                                                                                              RESERVATION        STATIONS</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>500</y>
+      <width>781</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_23">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_22">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>Field                             F0                    F1                      F2                  F3                F4                F5              F6           F8         F9       F10</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_21">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_28">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>                                                                                                FP     REGISTER     STATUS </string>
        </property>
       </widget>
      </item>
@@ -157,7 +289,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>805</width>
      <height>23</height>
     </rect>
    </property>
