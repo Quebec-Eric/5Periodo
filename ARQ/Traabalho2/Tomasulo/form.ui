@@ -116,17 +116,17 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="goButton">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>710</x>
       <y>600</y>
       <width>87</width>
       <height>26</height>
      </rect>
     </property>
     <property name="text">
-     <string>Clique aq</string>
+     <string>GO</string>
     </property>
    </widget>
    <widget class="QWidget" name="gridLayoutWidget_2">
@@ -149,58 +149,18 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_24">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_27">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
        <property name="text">
-        <string>NULL</string>
+        <string>                                                                                              RESERVATION        STATIONS</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
+     <item row="9" column="0">
       <widget class="QLabel" name="label_26">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(246, 245, 244);</string>
-       </property>
-       <property name="text">
-        <string>NULL</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_11">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(246, 245, 244);</string>
-       </property>
-       <property name="text">
-        <string>NULL</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_15">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(246, 245, 244);</string>
-       </property>
-       <property name="text">
-        <string>Name          Busy                   OP                    Vj                                  VK                                    Qj              Qk              Dest              A</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="label_25">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(246, 245, 244);</string>
-       </property>
-       <property name="text">
-        <string>NULL</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_13">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
@@ -219,13 +179,53 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_27">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_15">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(246, 245, 244);</string>
        </property>
        <property name="text">
-        <string>                                                                                              RESERVATION        STATIONS</string>
+        <string>Name          Busy                   OP                    Vj                                  VK                                    Qj              Qk              Dest              A</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_25">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_24">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(246, 245, 244);</string>
+       </property>
+       <property name="text">
+        <string>NULL</string>
        </property>
       </widget>
      </item>
@@ -283,6 +283,19 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>600</y>
+      <width>87</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Voltar</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -303,5 +316,25 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>goButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>rodar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>753</x>
+     <y>635</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>337</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>rodar()</slot>
+ </slots>
 </ui>

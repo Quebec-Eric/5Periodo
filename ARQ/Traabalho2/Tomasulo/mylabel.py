@@ -2,7 +2,7 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QLabel
-from PyQt5.QtCore import pyqtSlot as Slot
+
 
 
 class MyLabel(QLabel):
@@ -11,6 +11,5 @@ class MyLabel(QLabel):
         self.setText("teste 1")
         print(self.text())
 
-    @Slot()
-    def botaoClicado(self):
-        print("cheguei aq")
+    
+    
