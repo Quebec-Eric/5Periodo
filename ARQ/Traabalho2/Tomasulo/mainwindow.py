@@ -1,10 +1,11 @@
 # This Python file uses the following encoding: utf-8
 import sys
 
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow,QTableWidgetItem
 from PyQt5.QtCore import pyqtSlot as Slot
 
-import colocar
+import projeto
 
 
 # Important:
@@ -21,15 +22,14 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setWindowTitle("Tomasulo-Eric")
+        
+    
        
 
     @Slot()   
     def rodar(self):
-        colocar.salvarArquivo(self)
-        colocar.roderBuffer(self)
-        colocar.reservationStations(self)
-        colocar.fpRegisterStatus(self)
-        colocar.lerLOG(self)
+        projeto.inicio(self)
+        return
 
 
 if __name__ == "__main__":

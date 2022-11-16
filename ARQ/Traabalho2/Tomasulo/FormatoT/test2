@@ -1,7 +1,0 @@
-SUB F2, F3, F4
-LW F0, 4(F2)
-LW F1, 0(F3)
-ADD F0, F0, F1
-BEQ F0, F1, Loop 
-SUB F0, F0, F0
-BEQ F0, F1, Loop 
