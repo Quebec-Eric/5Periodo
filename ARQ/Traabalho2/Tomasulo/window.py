@@ -26,14 +26,13 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.goButton = QtWidgets.QPushButton(self.centralwidget)
-        self.goButton.setGeometry(QtCore.QRect(990, 730, 91, 41))
+        self.goButton.setGeometry(QtCore.QRect(990, 570, 91, 41))
         self.goButton.setObjectName("goButton")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(10, 730, 91, 41))
-        self.pushButton.setObjectName("pushButton")
+        self.voltar = QtWidgets.QPushButton(self.centralwidget)
+        self.voltar.setGeometry(QtCore.QRect(990, 640, 91, 41))
+        self.voltar.setObjectName("voltar")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(10, 0, 121, 241))
-        self.tableWidget.setMaximumSize(QtCore.QSize(121, 16777215))
+        self.tableWidget.setGeometry(QtCore.QRect(50, 0, 181, 241))
         self.tableWidget.setStyleSheet("color: rgb(0, 0, 0);")
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(1)
@@ -255,6 +254,9 @@ class Ui_MainWindow(object):
         self.line_15.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_15.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_15.setObjectName("line_15")
+        self.textEdit_5 = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_5.setGeometry(QtCore.QRect(320, 70, 51, 41))
+        self.textEdit_5.setObjectName("textEdit_5")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1083, 23))
@@ -269,13 +271,14 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.goButton.clicked.connect(MainWindow.rodar) # type: ignore
+        self.voltar.clicked.connect(MainWindow.voltar) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.goButton.setText(_translate("MainWindow", "GO"))
-        self.pushButton.setText(_translate("MainWindow", "Voltar"))
+        self.voltar.setText(_translate("MainWindow", "Voltar"))
         item = self.tableWidget.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "1"))
         item = self.tableWidget.verticalHeaderItem(1)
