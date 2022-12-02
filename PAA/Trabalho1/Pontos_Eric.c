@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
 
 double distancia_global = 0;
 typedef struct {
@@ -81,156 +83,114 @@ void comparar_Todos(Pontos_Eric Pontos[], int quantidade_pontos) {
 int esq(int n) { return ((n + 1) * 2) - 1; }
 int dir(int n) { return (n + 1) * 2; }
 
-Pontos_Eric *divisao_E_conquista(Pontos_Eric x[], Pontos_Eric y[], int esquerda,
-                                 int direita) {
-  Pontos_Eric *res = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * 2);
 
-  double delt = 0;
-  int meio = 0;
-  int contador = 0;
-
-  meio = esquerda + (direita - esquerda) / 2;
-
-  Pontos_Eric *esquerda_P = divisao_E_conquista(x, y, esquerda, meio);
-  Pontos_Eric *direita_P = divisao_E_conquista(x, y, meio + 1, direita);
-
-  if (calcular_Distancia(esquerda_P[0], esquerda_P[1]) <
-      calcular_Distancia(direita_P[0], direita_P[1])) {
-    res = esquerda_P;
-  } else {
-    res = direita_P;
-  }
-
-  delt = calcular_Distancia(res[0], res[1]);
-
-  Pontos_Eric *linhaD = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * sizeof(y));
-
-  for (int i = 0; i < sizeof(y); i++) {
-    if (delt > abs(x[meio].eixo_x - y[i].eixo_x)) {
-      linhaD[contador] = y[i];
-      contador++;
-    }
-  }
-
-  for (int i = 0; i < contador; i++) {
-    int j = i + 1;
-    while (j < contador && delt > calcular_Distancia(linhaD[i], linhaD[j])) {
-      delt = calcular_Distancia(linhaD[i], linhaD[j]);
-      res[0] = linhaD[i];
-      res[1] = linhaD[j];
-    }
-  }
-
-  return res;
+void swap(Pontos_Eric Pontos[], int i , int maior){
+  Pontos_Eric temporario = Pontos[i];
+  Pontos[i] = Pontos[maior];
+  Pontos[maior] = temporario;
 }
 
-void heapify(Pontos_Eric lista[], int i, int tamanho, bool x) {
-  int e = esq(i);
-  int d = dir(i);
+void criar_heap(Pontos_Eric Pontos[], int i, int tamanho, bool x) {
+  int esquerda = esq(i);
+  int direira = dir(i);
   int maior = -1;
-
-  // heapify pelo eixo X
   if (x) {
-    if (e < tamanho && lista[e].eixo_x > lista[i].eixo_x)
-      maior = e;
+    if (esquerda < tamanho && Pontos[esquerda].eixo_x > Pontos[i].eixo_x)
+      maior = esquerda;
     else
       maior = i;
 
-    if (d < tamanho && lista[d].eixo_x > lista[maior].eixo_x)
-      maior = d;
+    if (direira < tamanho && Pontos[direira].eixo_x > Pontos[maior].eixo_x)
+      maior = direira;
   }
-  // heapify pelo eixo Y
   else {
-    if (e < tamanho && lista[e].eixo_Y > lista[i].eixo_Y)
-      maior = e;
+    if (esquerda < tamanho && Pontos[esquerda].eixo_Y > Pontos[i].eixo_Y)
+      maior = esquerda;
     else
       maior = i;
 
-    if (d < tamanho && lista[d].eixo_Y > lista[maior].eixo_Y)
-      maior = d;
+    if (direira < tamanho && Pontos[direira].eixo_Y > Pontos[maior].eixo_Y)
+      maior = direira;
   }
 
   if (maior != i) {
-    // trocar maior por i
-    Pontos_Eric buffer = lista[i];
-    lista[i] = lista[maior];
-    lista[maior] = buffer;
-
-    // heapify posicao que era maior e contem i
-    heapify(lista, maior, tamanho, x);
+     swap(Pontos, i , maior);
+    criar_heap(Pontos, maior, tamanho, x);
   }
 }
 
-Pontos_Eric *heapSort(Pontos_Eric lista[], int tamanho, bool x) {
+Pontos_Eric *heapSort(Pontos_Eric Pontos[], int tamanho, bool x) {
 
   Pontos_Eric *resposta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * tamanho);
-
-  // Copiar lista pra resposta
   for (int i = 0; i < tamanho; i++) {
-    resposta[i] = lista[i];
+    resposta[i] = Pontos[i];
   }
-
-  // Construir heap
   for (int i = sizeof(resposta) / 2; i >= 0; i--) {
-    heapify(resposta, i, sizeof(resposta), x);
+    criar_heap(resposta, i, sizeof(resposta), x);
   }
-
-  // ordenar
   for (int i = sizeof(resposta) - 1; i > 0; i--) {
-    // trocar 0 com último
-    Pontos_Eric buffer = resposta[0];
+    
+    Pontos_Eric temporario = resposta[0];
     resposta[0] = resposta[i];
-    resposta[i] = buffer;
-
-    // heapify resposta[0]
-    heapify(resposta, 0, i, x);
+    resposta[i] = temporario;
+    criar_heap(resposta, 0, i, x);
   }
+  return resposta;
+}
+
+
+
+Pontos_Eric * retornar_2Pontos(Pontos_Eric ordenado_eixo_x[],int esquerda, int direira){
+  Pontos_Eric *resposta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * 2);
+  resposta[0] = ordenado_eixo_x[esquerda];
+  resposta[1] = ordenado_eixo_x[direira];
 
   return resposta;
 }
 
-Pontos_Eric *algoritmoNLogN1(Pontos_Eric ordenadaX[], Pontos_Eric ordenadaY[],
-                             int esq, int dir) {
-  // Declaracoes
+Pontos_Eric * retornar_3Pontos(Pontos_Eric ordenado_eixo_x[],int esquerda, int direita){
+  Pontos_Eric *resposta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * 2);
+
+  if (calcular_Distancia(ordenado_eixo_x[esquerda], ordenado_eixo_x[direita]) >
+        calcular_Distancia(ordenado_eixo_x[esquerda], ordenado_eixo_x[esquerda + 1])) {
+      resposta[0] = ordenado_eixo_x[esquerda];
+      resposta[1] = ordenado_eixo_x[direita];
+    } else {
+      resposta[0] = ordenado_eixo_x[esquerda];
+      resposta[1] = ordenado_eixo_x[esquerda + 1];
+    }
+
+    if (calcular_Distancia(ordenado_eixo_x[esquerda + 1], ordenado_eixo_x[direita]) >
+        calcular_Distancia(resposta[0], resposta[1])) {
+      resposta[0] = ordenado_eixo_x[esquerda + 1];
+      resposta[1] = ordenado_eixo_x[direita];
+    }
+
+  return resposta;
+}
+
+
+
+
+Pontos_Eric *divisao_Conquista(Pontos_Eric ordenado_eixo_x[], Pontos_Eric ordenacao_eixo_Y[],int esq, int dir) {
 
   Pontos_Eric *resposta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * 2);
-  // Caso base 2 pontos
   if (dir - esq == 1) {
-    resposta[0] = ordenadaX[esq];
-    resposta[1] = ordenadaX[dir];
+    resposta = retornar_2Pontos( ordenado_eixo_x, esq,dir);
   }
-  // Caso base 3 pontos - compara as 3 distâncias possíveis
-  else if (dir - esq == 2) {
-    if (calcular_Distancia(ordenadaX[esq], ordenadaX[dir]) >
-        calcular_Distancia(ordenadaX[esq], ordenadaX[esq + 1])) {
-      resposta[0] = ordenadaX[esq];
-      resposta[1] = ordenadaX[dir];
-    } else {
-      resposta[0] = ordenadaX[esq];
-      resposta[1] = ordenadaX[esq + 1];
-    }
-
-    if (calcular_Distancia(ordenadaX[esq + 1], ordenadaX[dir]) >
-        calcular_Distancia(resposta[0], resposta[1])) {
-      resposta[0] = ordenadaX[esq + 1];
-      resposta[1] = ordenadaX[dir];
-    }
+  else if (dir -esq == 2) {
+   resposta =retornar_3Pontos ( ordenado_eixo_x,esq,dir);  
   }
-  // Recursão 4 ou mais pontos
   else {
-    // Declaracoes locais
     double delta;
-    int mid, contador;
+    int mid, contador=0;
     Pontos_Eric *esquerda, *direita;
 
-    // Elemento do meio
     mid = esq + (dir - esq) / 2;
 
-    // Calcular pontos mais proximos de cada metade
-    esquerda = algoritmoNLogN1(ordenadaX, ordenadaY, esq, mid);
-    direita = algoritmoNLogN1(ordenadaX, ordenadaY, mid + 1, dir);
+    esquerda = divisao_Conquista(ordenado_eixo_x, ordenacao_eixo_Y, esq, mid);
+    direita = divisao_Conquista(ordenado_eixo_x, ordenacao_eixo_Y, mid + 1, dir);
 
-    // verificar o menor dos dois
     if (calcular_Distancia(esquerda[0], esquerda[1]) <
         calcular_Distancia(direita[0], direita[1])) {
       resposta = esquerda;
@@ -238,35 +198,28 @@ Pontos_Eric *algoritmoNLogN1(Pontos_Eric ordenadaX[], Pontos_Eric ordenadaY[],
       resposta = direita;
     }
 
-    // Calcular delta
+    
     delta = calcular_Distancia(resposta[0], resposta[1]);
 
-    // criar lista ordenada pelo eixo Y dos elementos + ou - delta do meio pelo
-    // eixo X
-    int tt = sizeof(ordenadaX) - 1;
-    Pontos_Eric *faixaDelta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * tt);
+    int tt = sizeof(ordenado_eixo_x) - 1;
+    Pontos_Eric *linha_D = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * tt);
 
-    contador = 0;
 
-    // passar por todos os pontos -- Tempo O(n)
-    for (int i = 0; i < sizeof(ordenadaY); i++) {
-      // testar se a distância do ponto ao meio é menor que delta
-      if (delta > abs(ordenadaX[mid].eixo_x - ordenadaY[i].eixo_x)) {
-        faixaDelta[contador] = ordenadaY[i];
+    int tamano=sizeof(ordenacao_eixo_Y);
+    for (int i = 0; i <tamano ; i++) {  
+      if (delta > abs(ordenado_eixo_x[mid].eixo_x - ordenacao_eixo_Y[i].eixo_x)) {
+        linha_D[contador] = ordenacao_eixo_Y[i];
         contador++;
       }
     }
 
-    // Verificar do menor para o maior se a distancia entre dois pontos da
-    // faixaDelta é menor que delta O(n), pois o while interno é O(1), no máximo
-    // 7 tentativas
     for (int i = 0; i < contador; i++) {
       int j = i + 1;
       while (j < contador &&
-             delta > calcular_Distancia(faixaDelta[i], faixaDelta[j])) {
-        delta = calcular_Distancia(faixaDelta[i], faixaDelta[j]);
-        resposta[0] = faixaDelta[i];
-        resposta[1] = faixaDelta[j];
+             delta > calcular_Distancia(linha_D[i], linha_D[j])) {
+        delta = calcular_Distancia(linha_D[i], linha_D[j]);
+        resposta[0] = linha_D[i];
+        resposta[1] = linha_D[j];
       }
     }
   }
@@ -274,43 +227,48 @@ Pontos_Eric *algoritmoNLogN1(Pontos_Eric ordenadaX[], Pontos_Eric ordenadaY[],
   return resposta;
 }
 
-Pontos_Eric *algoritmoNLogN(Pontos_Eric lista[]) {
-  // Declaracoes
-  Pontos_Eric *resposta;
-  Pontos_Eric *ordenadaX, *ordenadaY; // listas ordenadas pelo eixo X e eixo Y
+Pontos_Eric *iniciando_Divisao_E_Conquista(Pontos_Eric Pontos[], int quantidade_pontos) {
+  
+  Pontos_Eric *resultado;
+  Pontos_Eric *ordenado_eixo_x= (Pontos_Eric*)malloc(sizeof(Pontos_Eric)*quantidade_pontos);
+  Pontos_Eric *ordenacao_eixo_Y= (Pontos_Eric*)malloc(sizeof(Pontos_Eric)*quantidade_pontos); 
+  
+  ordenado_eixo_x = heapSort(Pontos, quantidade_pontos, true);
+  ordenacao_eixo_Y = heapSort(Pontos, quantidade_pontos, false);
 
-  // obter listas ordenadas
-  ordenadaX = heapSort(lista, sizeof(lista), true);
-  ordenadaY = heapSort(lista, sizeof(lista), false);
+  int tamanho= sizeof(ordenado_eixo_x) -1;
+  int esquerda=0;
+  resultado = divisao_Conquista(ordenado_eixo_x, ordenacao_eixo_Y, esquerda, tamanho);
 
-  // Calcular pontos mais próximos
-  resposta = algoritmoNLogN1(ordenadaX, ordenadaY, 0, sizeof(ordenadaX) - 1);
+  free(ordenado_eixo_x);
+  free(ordenacao_eixo_Y);
 
-  return resposta;
+  return resultado;
 }
 
-void iniciando_Divisao_E_Conquista(Pontos_Eric Pontos[], int quantidade) {
 
-  // Resposta resp[2];
-  Pontos_Eric *e = heapSort(Pontos, quantidade, true);
-  Pontos_Eric *y = heapSort(Pontos, quantidade, false);
-
-  for (int i = 0; i < quantidade; i++) {
-    printf("%lf %lf %i\n", e[i].eixo_x, e[i].eixo_Y, e[i].indice);
-  }
-
-  return;
-}
 
 void iniciar_Problema(Pontos_Eric Pontos[], int quantidade_pontos) {
-  comparar_Todos(Pontos, quantidade_pontos);
-     Pontos_Eric *res=algoritmoNLogN(Pontos);
+  
+  printf("\nGostaria do algoritimo 1==O(n²) ou 2== O(nlogn)\n");
+  int valor=entrada_Dados();
+  if(valor ==1){
+    comparar_Todos(Pontos, quantidade_pontos);
+  }
+  else{
+    Pontos_Eric *res=iniciando_Divisao_E_Conquista(Pontos,quantidade_pontos);
     double distancia = calcular_Distancia(res[0],res[1]);
     Resposta *resposta=(Resposta*)malloc(sizeof(Resposta)*2);
     resposta[0].resposta=res[0];
     resposta[1].resposta=res[1];
+    printf("\nAlgoritimo O(nlogn) \n");
     toString(resposta,distancia);
+    free(res);
+  }
+  
   return;
+
+
 }
 
 int main(int argc, char **argv) {
@@ -319,10 +277,13 @@ int main(int argc, char **argv) {
   Pontos_Eric pontos_no_espaco[quantidade];
   for (int i = 0; i < quantidade; i++) {
     pontos_no_espaco[i] = gerar_Dados(quantidade, i);
-    // printf("%lf %lf %i\n",
-    // pontos_no_espaco[i].eixo_x,pontos_no_espaco[i].eixo_Y ,
-    // pontos_no_espaco[i].indice);
+    
   }
+  double time_spent=0.0;
+  clock_t begin =clock();
   iniciar_Problema(pontos_no_espaco, quantidade);
+  clock_t end = clock();
+  time_spent+=(double)(end-begin)/CLOCKS_PER_SEC;
+  printf("Tempo de execucao foi de %f segundos", time_spent);
   return 0;
 }
