@@ -39,9 +39,12 @@ class MainWindow(QMainWindow):
     def rodar(self):
         global clock
         if clock == 0:
-            self.ui.textEdit_5.setText(clock)
+            self.ui.textEdit_5.setText("1")
             clock+=1
             projeto.inicio(self)
+        else:
+            self.ui.textEdit_5.setText("2")
+            clock+=1    
         return
 
     @Slot()
