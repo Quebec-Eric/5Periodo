@@ -1,3 +1,9 @@
+//Programa de Eric Azevedo de Oliviera
+//5 periodo Ciencia da Computacao
+//Programa e analise de algoritimo
+
+
+// Bibliotecas utilizadas
 #include <float.h>
 #include <math.h>
 #include <stdbool.h>
@@ -6,18 +12,26 @@
 #include <time.h>
 #include <unistd.h>
 
-double distancia_global = 0;
+
+
+// struc para saber os pontos
 typedef struct {
   int indice;
   double eixo_x;
   double eixo_Y;
 } Pontos_Eric;
 
+// struct para arquivar as respostas
 typedef struct {
   Pontos_Eric resposta;
 
 } Resposta;
 
+
+double distancia_global=0;
+
+
+//Funcao da tela inicial do programa 
 void mostrar_Rf() {
   printf("-----------------------\n");
   printf("Programa feito por Eric\n");
@@ -26,20 +40,28 @@ void mostrar_Rf() {
   printf("Ex: 1000, 100000, 1000000\n");
 }
 
+//Funcao para gerar os pontos de forma aleatorias 
 Pontos_Eric gerar_Dados(int quantidade, int indice) {
+  //variavel
   Pontos_Eric pontos;
+  
+  //agregando as variaves com valores double randomicos
   pontos.eixo_x = ((double)rand() / (double)(RAND_MAX)*quantidade);
   pontos.eixo_Y = ((double)rand() / (double)(RAND_MAX)*quantidade);
   pontos.indice = indice;
+
+  //retornando os pontos
   return pontos;
 }
 
+//funcao para entrada de valores inteiros do teclado
 int entrada_Dados() {
   int valor = 0;
   scanf("%d", &valor);
   return valor;
 }
 
+// to string para escrever os pontos e a distancia entre os pontos
 void toString(Resposta r[], double distancia) {
 
   printf("\nPrimeiro ponto esta [%lf] do eixo X e [%lf] do eixo Y\n",
@@ -50,15 +72,12 @@ void toString(Resposta r[], double distancia) {
   printf("-----------------------------------------------\n");
 }
 
+//calcular a distacia euclidiana 
 double calcular_Distancia(Pontos_Eric a, Pontos_Eric b) {
-  double distancia = -1;
-
-  double distancia_X = a.eixo_x - b.eixo_x;
-  double distancia_Y = a.eixo_Y - b.eixo_Y;
-  distancia = sqrt(pow(distancia_X, 2) + pow(distancia_Y, 2));
-  return distancia;
+  return  sqrt(pow(a.eixo_x - b.eixo_x, 2) + pow(a.eixo_Y - b.eixo_Y, 2));
 }
 
+//algoritimo de brut force
 void comparar_Todos(Pontos_Eric Pontos[], int quantidade_pontos) {
   Resposta resp[2];
   double menor_distancia = DBL_MAX;
@@ -80,21 +99,30 @@ void comparar_Todos(Pontos_Eric Pontos[], int quantidade_pontos) {
   return;
 }
 
-int esq(int n) { return ((n + 1) * 2) - 1; }
-int dir(int n) { return (n + 1) * 2; }
+int saber_Tabalho(Pontos_Eric Pontos[]){
+  int x=0;
+  while (Pontos[x].eixo_x)
+  {
+    
+  }
+  
+}
 
 
+//funcao para trocar a posicao do vetor da posicao i com a posicao maior
 void swap(Pontos_Eric Pontos[], int i , int maior){
   Pontos_Eric temporario = Pontos[i];
   Pontos[i] = Pontos[maior];
   Pontos[maior] = temporario;
+  return;
 }
 
+//funcao de contrucao  do hip 
 void criar_heap(Pontos_Eric Pontos[], int i, int tamanho, bool x) {
-  int esquerda = esq(i);
-  int direira = dir(i);
+  int esquerda = ((i+1)*2)-1;
+  int direira = (i+1) * 2;
   int maior = -1;
-  if (x) {
+  if (x==true) {
     if (esquerda < tamanho && Pontos[esquerda].eixo_x > Pontos[i].eixo_x)
       maior = esquerda;
     else
@@ -119,64 +147,60 @@ void criar_heap(Pontos_Eric Pontos[], int i, int tamanho, bool x) {
   }
 }
 
-Pontos_Eric *heapSort(Pontos_Eric Pontos[], int tamanho, bool x) {
+// Funcao para copiar os dados de um vator para outro
+Pontos_Eric* copiar_Dados(Pontos_Eric dados_seraoNalisados[],Pontos_Eric Pontos[], int tamanho){
+    for (int i = 0; i < tamanho; i++) {
+    dados_seraoNalisados[i] = Pontos[i];
+  }
+  return dados_seraoNalisados;
+}
 
-  Pontos_Eric *resposta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * tamanho);
-  for (int i = 0; i < tamanho; i++) {
-    resposta[i] = Pontos[i];
+//funcao para realizar a ordenacao , utilizanndo a funcao de contruir acima
+Pontos_Eric *heapSort(Pontos_Eric Pontos[], int tamanho, bool x) {
+  Pontos_Eric *dadosCopiados = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * tamanho);
+    dadosCopiados=copiar_Dados(dadosCopiados,Pontos,tamanho);
+  for (int i = tamanho / 2; i >= 0; i--) {
+    criar_heap(dadosCopiados, i, tamanho, x);
   }
-  for (int i = sizeof(resposta) / 2; i >= 0; i--) {
-    criar_heap(resposta, i, sizeof(resposta), x);
+  for (int i = tamanho - 1; i > 0; i--) {
+      swap(dadosCopiados,0,i);
+      criar_heap(dadosCopiados, 0, i, x);
   }
-  for (int i = sizeof(resposta) - 1; i > 0; i--) {
-    
-    Pontos_Eric temporario = resposta[0];
-    resposta[0] = resposta[i];
-    resposta[i] = temporario;
-    criar_heap(resposta, 0, i, x);
-  }
-  return resposta;
+  return dadosCopiados;
 }
 
 
-
-Pontos_Eric * retornar_2Pontos(Pontos_Eric ordenado_eixo_x[],int esquerda, int direira){
-  Pontos_Eric *resposta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * 2);
+// se so existirem 2 pontos para sevem analisados 
+Pontos_Eric * retornar_2Pontos(Pontos_Eric ordenado_eixo_x[],int esquerda, int direira,Pontos_Eric resposta[]){
   resposta[0] = ordenado_eixo_x[esquerda];
   resposta[1] = ordenado_eixo_x[direira];
-
   return resposta;
 }
 
+//funcao para ganhar tempo com 3 pontos apenas
 Pontos_Eric * retornar_3Pontos(Pontos_Eric ordenado_eixo_x[],int esquerda, int direita){
   Pontos_Eric *resposta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * 2);
-
   if (calcular_Distancia(ordenado_eixo_x[esquerda], ordenado_eixo_x[direita]) >
         calcular_Distancia(ordenado_eixo_x[esquerda], ordenado_eixo_x[esquerda + 1])) {
-      resposta[0] = ordenado_eixo_x[esquerda];
-      resposta[1] = ordenado_eixo_x[direita];
+      resposta=retornar_2Pontos(ordenado_eixo_x, esquerda,direita,resposta);
     } else {
-      resposta[0] = ordenado_eixo_x[esquerda];
-      resposta[1] = ordenado_eixo_x[esquerda + 1];
+       resposta=retornar_2Pontos(ordenado_eixo_x, esquerda,esquerda+1,resposta);
     }
-
     if (calcular_Distancia(ordenado_eixo_x[esquerda + 1], ordenado_eixo_x[direita]) >
         calcular_Distancia(resposta[0], resposta[1])) {
-      resposta[0] = ordenado_eixo_x[esquerda + 1];
-      resposta[1] = ordenado_eixo_x[direita];
+      resposta=retornar_2Pontos(ordenado_eixo_x, esquerda+1,direita,resposta);
     }
-
   return resposta;
 }
 
 
 
-
+//funcao para fazer a divisao e conquista , dividndo o plano no meio e calular o delta fazendo a recusao
 Pontos_Eric *divisao_Conquista(Pontos_Eric ordenado_eixo_x[], Pontos_Eric ordenacao_eixo_Y[],int esq, int dir) {
 
   Pontos_Eric *resposta = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * 2);
   if (dir - esq == 1) {
-    resposta = retornar_2Pontos( ordenado_eixo_x, esq,dir);
+    resposta = retornar_2Pontos( ordenado_eixo_x, esq,dir,resposta);
   }
   else if (dir -esq == 2) {
    resposta =retornar_3Pontos ( ordenado_eixo_x,esq,dir);  
@@ -184,27 +208,22 @@ Pontos_Eric *divisao_Conquista(Pontos_Eric ordenado_eixo_x[], Pontos_Eric ordena
   else {
     double delta;
     int mid, contador=0;
-    Pontos_Eric *esquerda, *direita;
-
+    Pontos_Eric *quadrande_Q, *quadrande_R;
     mid = esq + (dir - esq) / 2;
+    quadrande_Q = divisao_Conquista(ordenado_eixo_x, ordenacao_eixo_Y, esq, mid);
+    quadrande_R = divisao_Conquista(ordenado_eixo_x, ordenacao_eixo_Y, mid + 1, dir);
 
-    esquerda = divisao_Conquista(ordenado_eixo_x, ordenacao_eixo_Y, esq, mid);
-    direita = divisao_Conquista(ordenado_eixo_x, ordenacao_eixo_Y, mid + 1, dir);
-
-    if (calcular_Distancia(esquerda[0], esquerda[1]) <
-        calcular_Distancia(direita[0], direita[1])) {
-      resposta = esquerda;
+    if (calcular_Distancia(quadrande_Q[0], quadrande_Q[1]) <
+        calcular_Distancia(quadrande_R[0], quadrande_R[1])) {
+      resposta = quadrande_Q;
     } else {
-      resposta = direita;
+      resposta = quadrande_R;
     }
+    delta = calcular_Distancia(resposta[0], resposta[1]);
+    int tt = sizeof(ordenado_eixo_x) - 1;
 
     
-    delta = calcular_Distancia(resposta[0], resposta[1]);
-
-    int tt = sizeof(ordenado_eixo_x) - 1;
     Pontos_Eric *linha_D = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * tt);
-
-
     int tamano=sizeof(ordenacao_eixo_Y);
     for (int i = 0; i <tamano ; i++) {  
       if (delta > abs(ordenado_eixo_x[mid].eixo_x - ordenacao_eixo_Y[i].eixo_x)) {
@@ -212,21 +231,20 @@ Pontos_Eric *divisao_Conquista(Pontos_Eric ordenado_eixo_x[], Pontos_Eric ordena
         contador++;
       }
     }
-
     for (int i = 0; i < contador; i++) {
       int j = i + 1;
       while (j < contador &&
              delta > calcular_Distancia(linha_D[i], linha_D[j])) {
         delta = calcular_Distancia(linha_D[i], linha_D[j]);
-        resposta[0] = linha_D[i];
-        resposta[1] = linha_D[j];
+        resposta=retornar_2Pontos(linha_D, i,j,resposta);
       }
     }
+  free(linha_D);
   }
-
   return resposta;
 }
 
+//inicio do divisao e conquista , prerando e ordenndo os vetores em funcao de x e Y
 Pontos_Eric *iniciando_Divisao_E_Conquista(Pontos_Eric Pontos[], int quantidade_pontos) {
   
   Pontos_Eric *resultado;
@@ -247,7 +265,23 @@ Pontos_Eric *iniciando_Divisao_E_Conquista(Pontos_Eric Pontos[], int quantidade_
 }
 
 
+void criar_Arquivo_Com_pontos(Pontos_Eric Pontos[], int quantidade){
+char buf[128];
+FILE *pont_arq; 
+pont_arq = fopen("PontosComputados.txt", "w");
+for (int i = 0; i < quantidade; i++)
+{
+  sprintf(buf, "%f", Pontos[i].eixo_x);
+  fprintf(pont_arq," X== %s  ",buf);
+  sprintf(buf, "%f", Pontos[i].eixo_Y);
+  fprintf(pont_arq," Y== %s\n",buf);
+}
+fclose(pont_arq);
 
+
+}
+
+//funcao para escolher qual complexidade o user gostaria de uzar
 void iniciar_Problema(Pontos_Eric Pontos[], int quantidade_pontos) {
   
   printf("\nGostaria do algoritimo 1==O(n²) ou 2== O(nlogn)\n");
@@ -258,12 +292,13 @@ void iniciar_Problema(Pontos_Eric Pontos[], int quantidade_pontos) {
   else{
     Pontos_Eric *res=iniciando_Divisao_E_Conquista(Pontos,quantidade_pontos);
     double distancia = calcular_Distancia(res[0],res[1]);
-    Resposta *resposta=(Resposta*)malloc(sizeof(Resposta)*2);
-    resposta[0].resposta=res[0];
-    resposta[1].resposta=res[1];
+    Resposta *resposta_proximos=(Resposta*)malloc(sizeof(Resposta)*2);
+    resposta_proximos[0].resposta=res[0];
+    resposta_proximos[1].resposta=res[1]; 
     printf("\nAlgoritimo O(nlogn) \n");
-    toString(resposta,distancia);
+    toString(resposta_proximos,distancia);
     free(res);
+    free(resposta_proximos);
   }
   
   return;
@@ -271,6 +306,7 @@ void iniciar_Problema(Pontos_Eric Pontos[], int quantidade_pontos) {
 
 }
 
+//inicio do prograa
 int main(int argc, char **argv) {
   mostrar_Rf();
   int quantidade = entrada_Dados();
@@ -285,5 +321,6 @@ int main(int argc, char **argv) {
   clock_t end = clock();
   time_spent+=(double)(end-begin)/CLOCKS_PER_SEC;
   printf("Tempo de execucao foi de %f segundos", time_spent);
+  criar_Arquivo_Com_pontos(pontos_no_espaco,quantidade);
   return 0;
 }
