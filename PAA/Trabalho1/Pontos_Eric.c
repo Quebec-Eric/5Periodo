@@ -99,14 +99,7 @@ void comparar_Todos(Pontos_Eric Pontos[], int quantidade_pontos) {
   return;
 }
 
-int saber_Tabalho(Pontos_Eric Pontos[]){
-  int x=0;
-  while (Pontos[x].eixo_x)
-  {
-    
-  }
-  
-}
+
 
 
 //funcao para trocar a posicao do vetor da posicao i com a posicao maior
