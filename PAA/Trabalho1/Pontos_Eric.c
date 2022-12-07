@@ -213,7 +213,7 @@ Pontos_Eric *divisao_Conquista(Pontos_Eric ordenado_eixo_x[], Pontos_Eric ordena
       resposta = quadrande_R;
     }
     delta = calcular_Distancia(resposta[0], resposta[1]);
-    int tt = sizeof(ordenado_eixo_x) - 1;
+    size_t tt = sizeof(ordenado_eixo_x)/sizeof(Pontos_Eric) - 1;
 
     
     Pontos_Eric *linha_D = (Pontos_Eric *)malloc(sizeof(Pontos_Eric) * tt);
