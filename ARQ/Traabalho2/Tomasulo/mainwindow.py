@@ -21,10 +21,10 @@ class MainWindow(QMainWindow):
     
     def __init__(self, parent=None):
        
-        super().__init__(parent)
+        super().__init__(parent) 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.textEdit_5.setText("0")
+       
         self.setWindowTitle("Tomasulo-Eric")
         self.ui.tableWidget.setColumnWidth(0,200)
         t=0
@@ -33,19 +33,16 @@ class MainWindow(QMainWindow):
             
             instrucoes.append("------------------")    
             t+=1
-           # eric=self.ui.tableWidget.item(t-1,1).read()
-           # print(eric)
+           
     @Slot()   
     def rodar(self):
         global clock
         if clock == 0:
-            self.ui.textEdit_5.setText("1")
-            clock+=1
             projeto.inicio(self)
+            clock +=1
         else:
-            self.ui.textEdit_5.setText("2")
-            clock+=1    
-        return
+            projeto.PassarClock(self)
+        return 0
 
     @Slot()
     def voltar(self):
