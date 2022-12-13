@@ -592,6 +592,14 @@ class register_result_status:
     
 
     a = ""
+    p.ui.tableWidget_4.setItem(1,1,QTableWidgetItem("No"))
+    p.ui.tableWidget_4.setItem(1,2,QTableWidgetItem("No"))
+    p.ui.tableWidget_4.setItem(1,3,QTableWidgetItem("No"))
+    p.ui.tableWidget_4.setItem(1,4,QTableWidgetItem("No"))
+    p.ui.tableWidget_4.setItem(1,5,QTableWidgetItem("No"))
+    p.ui.tableWidget_4.setItem(1,6,QTableWidgetItem("No"))
+    p.ui.tableWidget_4.setItem(1,7,QTableWidgetItem("No"))
+    p.ui.tableWidget_4.setItem(1,8,QTableWidgetItem("No"))
     for fr in self.float_regs: 
       if fr.qi == "null":
          qi = ""
@@ -601,14 +609,14 @@ class register_result_status:
         saber="Yes"
      
       p.ui.tableWidget_4.setItem(0,valor,QTableWidgetItem(str(qi)))
-      p.ui.tableWidget_4.setItem(1,valor,QTableWidgetItem(saber))
+      #p.ui.tableWidget_4.setItem(1,valor,QTableWidgetItem(saber))
       valor+=1
     
     valor =1
     a = ""
     for fr in self.float_regs:
        a += str(fr.value) + "\t"
-       p.ui.tableWidget_4.setItem(1,valor,QTableWidgetItem(saber))
+       #p.ui.tableWidget_4.setItem(1,valor,QTableWidgetItem(saber))
        valor+=1
     
     
@@ -689,6 +697,7 @@ def inicio(self):
   mem_size = 64     
   tomasulo = Tomasulo(insts, adder_num, multiplier_num, load_buffer_num, store_buffer_num, 
 			float_reg_num, int_reg_num, mem_size,self)
+      
   
 
 

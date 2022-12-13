@@ -117,7 +117,7 @@ color: rgb(0, 0, 0);
    <widget class="QTableWidget" name="tableWidget_2">
     <property name="geometry">
      <rect>
-      <x>-10</x>
+      <x>0</x>
       <y>260</y>
       <width>821</width>
       <height>265</height>
@@ -322,7 +322,7 @@ color: rgb(0, 0, 0);
    <widget class="QTableWidget" name="tableWidget_4">
     <property name="geometry">
      <rect>
-      <x>-10</x>
+      <x>0</x>
       <y>520</y>
       <width>921</width>
       <height>91</height>
@@ -331,11 +331,6 @@ color: rgb(0, 0, 0);
     <row>
      <property name="text">
       <string>1</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>2</string>
      </property>
     </row>
     <column>
@@ -386,11 +381,6 @@ color: rgb(0, 0, 0);
     <item row="0" column="0">
      <property name="text">
       <string>Recorder#</string>
-     </property>
-    </item>
-    <item row="1" column="0">
-     <property name="text">
-      <string>Busy</string>
      </property>
     </item>
    </widget>
