@@ -24,7 +24,7 @@ class MainWindow(QMainWindow):
         super().__init__(parent) 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-       
+        projeto.escreverFim(self)
         self.setWindowTitle("Tomasulo-Eric")
         self.ui.tableWidget.setColumnWidth(0,200)
         t=0
@@ -33,6 +33,7 @@ class MainWindow(QMainWindow):
             
             instrucoes.append("------------------")    
             t+=1
+        projeto.escreverFim(self)
            
     @Slot()   
     def rodar(self):
