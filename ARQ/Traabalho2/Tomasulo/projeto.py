@@ -21,7 +21,7 @@ DIVD = "DIV.D"
 t=0
 valor =0;
 class Tomasulo:
-  def __init__(self, janelaEntrada, adder_num, multiplier_num, load_buffer_num, store_buffer_num, float_reg_num, int_reg_num, mem_size,p):
+  def __init__(self, janelaEntrada, quantidadeDeRegistradodesADD, quantidadeDeRegistradodesMult, quantidadeDeRegistradodesLW, quantidadeDeRegistradodesSw, quantidadeDeRegistradodesFloat, quantidadeDeRegistradodesInnteger, quantidadeDeRegistradodesMemoria,p):
     global valor
     global fazerTudo
 
@@ -39,16 +39,16 @@ class Tomasulo:
       i += 1
     self.instruction_status = [instruction_status(janelaEntrada[i], i) for i in range(len(janelaEntrada))]
     valor =0
-    self.reservation_station = reservation_station(adder_num, multiplier_num)
+    self.reservation_station = reservation_station(quantidadeDeRegistradodesADD, quantidadeDeRegistradodesMult)
 
-    self.load_buffers = [load_buffer(i) for i in range(load_buffer_num)]
-    self.store_buffers = [store_buffer(i) for i in range(store_buffer_num)]
+    self.load_buffers = [load_buffer(i) for i in range(quantidadeDeRegistradodesLW)]
+    self.store_buffers = [store_buffer(i) for i in range(quantidadeDeRegistradodesSw)]
     
-    self.register_result_status = register_result_status(float_reg_num, int_reg_num)
-    self.mem = [mem(i) for i in range(mem_size)]
+    self.register_result_status = register_result_status(quantidadeDeRegistradodesFloat, quantidadeDeRegistradodesInnteger)
+    self.mem = [mem(i) for i in range(quantidadeDeRegistradodesMemoria)]
     self.clock = 1
 
-  def lbIsFull(self): 
+  def SaberSeoBudderEstalivre(self): 
     for lb in self.load_buffers: 
       if lb.busy == False: return lb.index 
     return "True" 
@@ -200,7 +200,7 @@ class Tomasulo:
     for inst in self.instruction_status:      
       if inst.issue == -1: 
         if inst.name == LD:
-          index = self.lbIsFull() 
+          index = self.SaberSeoBudderEstalivre()
           if index != "True" and self.load_buffers[index].last_time_write != self.clock:
             self.load_buffers[index].time = 2
             inst.issue = self.clock
@@ -272,10 +272,11 @@ class Tomasulo:
               inst.issue = self.clock
               self.reservation_station.multipliers[index].inst_index = inst.index 
               if inst.name == MULD:
-                self.reservation_station.multipliers[index].time = 10
+                self.reservation_station.multipliers[index].time = 4
+               #prit("to aki")
                 self.reservation_station.multipliers[index].op = MULD
               elif inst.name == DIVD: 
-                self.reservation_station.multipliers[index].time = 40
+                self.reservation_station.multipliers[index].time = 5
                 self.reservation_station.multipliers[index].op = DIVD
 
               if self.register_result_status.float_regs[inst.rsIndex].qi != "null":
@@ -325,6 +326,7 @@ class instruction_status:
   def print(self,p):
     global valor 
     valor +=1
+    #prit("to aki")
     if self.issue == -1: issue = "--"
     else: issue = "x"
     if self.complete == -1: complete = "--"                                                                                                                                                                                 
@@ -375,8 +377,7 @@ class instruction_status:
       p.ui.tableWidget_3.setItem(valor-1,5,QTableWidgetItem(str(self.rd)))
 
      
-    
-
+  
 class reservation_station:
   def __init__(self, adder_num, multiplier_num):
     self.adders = [adder(i) for i in range(adder_num)]
@@ -407,6 +408,7 @@ class reservation_station:
     if RS.op == "null": op = ""
     else: op = RS.op
     if RS.vj == "null": vj = ""
+    #prit("to aki")
     else: vj = RS.vj
     if RS.vk == "null": vk = ""
     else: vk = RS.vk
@@ -521,6 +523,7 @@ class load_buffer:
     else: busy = "Yes"
     if self.qj == "null": qj = ""
     else: qj = self.qj.split("_")[0] + "_" + str(int(self.qj.split("_")[-1]) + 1)          
+    #funcionando ate aki
     name = self.name.split("_")[0] + "_" + str(int(self.name.split("_")[-1]) + 1)   
     p.ui.tableWidget_2.setItem(valor-1,0,QTableWidgetItem(name))
     p.ui.tableWidget_2.setItem(valor-1,1,QTableWidgetItem(busy))
@@ -685,18 +688,18 @@ def existe(palava):
   return 1
 
 def inicio(self):
-  
-  global tomasulo
-  
+  global tomasulo  
   f = open('test2.txt', 'r')
-  insts = f.readlines()
-  adder_num = 3
-  multiplier_num = load_buffer_num = store_buffer_num = 2  
-  float_reg_num = 16  
-  int_reg_num = 32  
-  mem_size = 64     
-  tomasulo = Tomasulo(insts, adder_num, multiplier_num, load_buffer_num, store_buffer_num, 
-			float_reg_num, int_reg_num, mem_size,self)
+  leitura_Arquivo = f.readlines()
+  quantidadeDeRegistradodesADD = 3
+  quantidadeDeRegistradodesMult =2
+  quantidadeDeRegistradodesLW =1
+  quantidadeDeRegistradodesSw = 2  
+  quantidadeDeRegistradodesfloat = 16  
+  quantidadeDeRegistradodesInterger = 32  
+  quantidadeDeRegistradodesMemoria = 64     
+  tomasulo = Tomasulo(leitura_Arquivo, quantidadeDeRegistradodesADD, quantidadeDeRegistradodesMult, quantidadeDeRegistradodesLW, quantidadeDeRegistradodesSw, 
+			quantidadeDeRegistradodesfloat, quantidadeDeRegistradodesInterger, quantidadeDeRegistradodesMemoria,self)
       
   
 
