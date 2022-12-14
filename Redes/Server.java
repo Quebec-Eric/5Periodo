@@ -8,8 +8,10 @@ class Produtos {
 
     private String nome_Produto;
     private int valor_Produto;
+    private int id_Produto;
 
-    Produtos(String nom, int valor) {
+    Produtos(String nom, int valor, int id) {
+        this.id_Produto=id;
         this.nome_Produto = nom;
         this.valor_Produto = valor;
     }
@@ -19,10 +21,12 @@ class Produtos {
 
     }
 
+
     public String toStrinng() {
-        return this.nome_Produto + ":" + this.valor_Produto + ":" + "|";
+        return this.id_Produto +":" +this.nome_Produto + ":" + this.valor_Produto +"|";
     }
 }
+
 
 public class Server extends Thread {
 
@@ -51,8 +55,25 @@ public class Server extends Thread {
 
     }
 
+    public static void CriarProdutos(){
+        produtos[0]= new Produtos("Banada",3, 1);
+        produtos[1]= new Produtos("Refri",10, 2);
+        produtos[2]= new Produtos("Pao",2, 3);
+        produtos[3]= new Produtos("Cerveja",8, 4);
+        produtos[4]= new Produtos("Biscoito",5, 5);
+        return;
+    }
+
+
+
+
+    public static void AdicionarProcuto(int idPodutor){
+        ProdutosCompras.add(produtos[idPodutor-1]);
+    }
+
     public static void main(String[] args) {
-        // TCP
+        CriarProdutos();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -110,7 +131,7 @@ public class Server extends Thread {
                         
                         String recebedio =(new String(packet.getData()));
                         if (!recebedio.equals("Comprar") && !recebedio.equals("Listar")) {
-                            ProdutosCompras.add(new Produtos(recebedio, 10));
+                            AdicionarProcuto(Integer.parseInt(recebedio));
                         }
                     }
                 } catch (IOException ioe) {}
