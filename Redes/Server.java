@@ -1,5 +1,11 @@
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.ArrayList;
@@ -23,20 +29,20 @@ class Produtos {
 
 
     public String toStrinng() {
-        return this.id_Produto +":" +this.nome_Produto + ":" + this.valor_Produto +"|";
+		
+        return id_Produto +":" +nome_Produto + ":R$" + valor_Produto +"|";
     }
 }
 
 
-public class Server extends Thread {
-
-    private static Produtos[] produtos = new Produtos[5];
-    private static ArrayList<Produtos> ProdutosCompras = new ArrayList();
+public class Server {
+	public static Produtos[] produtos = new Produtos[5];
+    public static ArrayList<Produtos> ProdutosCompras = new ArrayList();
 
     private static String MostrarProdutos() throws IOException {
         String todosOsProdutos = "";
         for (int i = 0; i < produtos.length; i++) {
-            todosOsProdutos += produtos[i].toString();
+            todosOsProdutos += produtos[i].toStrinng();
         }
         return todosOsProdutos;
 
@@ -70,72 +76,95 @@ public class Server extends Thread {
     public static void AdicionarProcuto(int idPodutor){
         ProdutosCompras.add(produtos[idPodutor-1]);
     }
+	public static void main(String[] args) {
+		// TCP
+		CriarProdutos();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				ExecutorService executor = null;
+				try (ServerSocket server = new ServerSocket(1024)) {
+					executor = Executors.newFixedThreadPool(5);
+					System.out.println("Listening on TCP port 1234, Say hi!");
+					while (true) {
+						final Socket socket = server.accept();
+						executor.execute(new Runnable() {
+							@Override
+							public void run() {
+								String inputLine = "";
+								System.err.println(
+										socket.toString() + " ~> connected");
+								try (PrintWriter out = new PrintWriter(
+										socket.getOutputStream(), true);
+										BufferedReader in = new BufferedReader(
+												new InputStreamReader(socket
+														.getInputStream()))) {
+									while (!inputLine.equals("!quit")& (inputLine = in.readLine()) != null) {
+										System.out.println(inputLine);
+										if(inputLine.equals("Listar")){
+											String pegar =MostrarProdutos();
+											
+											out.println(pegar);
+										}
+										if(inputLine.equals("Comprar")){
+										String total=	MostrarPrecoFinal() ;
+										out.println(total);
+										}
+										
 
-    public static void main(String[] args) {
-        CriarProdutos();
+										
+									}
+								} catch (IOException ioe) {
+									ioe.printStackTrace();
+								} finally {
+									try {
+										System.err.println(socket.toString()
+												+ " ~> closing");
+										socket.close();
+									} catch (IOException ioe) {
+										ioe.printStackTrace();
+									}
+								}
+							}
+						});
+					}
+				} catch (IOException ioe) {
+					System.err.println("Cannot open the port on TCP");
+					ioe.printStackTrace();
+				} finally {
+					System.out.println("Closing TCP server");
+					if (executor != null) {
+						executor.shutdown();
+					}
+				}
+			}
+		}).start();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ExecutorService executor = null;
-                try (ServerSocket server = new ServerSocket(666)) {
-                    executor = Executors.newFixedThreadPool(5);
-                    System.out.println("Porta TCP!");
-                    while (true) {
-                        final Socket socket = server.accept();
-                        executor.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                String inputLine = "";
-                                System.err.println("connected");
-                                try (PrintWriter out = new PrintWriter(
-                                        socket.getOutputStream(), true);
-                                        BufferedReader in = new BufferedReader(
-                                                new InputStreamReader(socket
-                                                        .getInputStream()))) {
-                                    while (!inputLine.equals("!quit")
-                                            && (inputLine = in
-                                                    .readLine()) != null) {
-                                        if (inputLine.equals("Listar")) {
+		// UDP
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try (DatagramSocket socket = new DatagramSocket(1024)) {
+					byte[] buf = new byte[socket.getReceiveBufferSize()];
+					DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
-                                            String str = MostrarProdutos();
-                                            DataOutputStream saida = new DataOutputStream(socket.getOutputStream());
-                                            saida.writeBytes(str);
-                                        } else if (inputLine.equals("Comprar")) {
-                                            String str = MostrarPrecoFinal();
-                                            DataOutputStream saida = new DataOutputStream(socket.getOutputStream());
-                                            saida.writeBytes(str);
-
-                                        }
-
-                                    }
-                                } catch (IOException ioe) {
-                                }
-                            }
-                        });
-                    }
-                } catch (IOException ioe) {}
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try (DatagramSocket socket = new DatagramSocket(666)) {
-                    byte[] buf = new byte[socket.getReceiveBufferSize()];
-                    DatagramPacket packet = new DatagramPacket(buf, buf.length);
-
-                    System.out.println(" UDP 666");
-                    while (true) {
-                        socket.receive(packet);
-                        
-                        String recebedio =(new String(packet.getData()));
-                        if (!recebedio.equals("Comprar") && !recebedio.equals("Listar")) {
-                            AdicionarProcuto(Integer.parseInt(recebedio));
-                        }
-                    }
-                } catch (IOException ioe) {}
-            }
-        }).start();
-    }
+					System.out.println("Listening on UDP port 1234, Say hi!");
+					while (true) {
+						socket.receive(packet);
+						
+						String pegar =new String(packet.getData());
+						
+						//AdicionarProcuto(Integer.parseInt(pegar));
+						
+						socket.send(packet);
+					}
+				} catch (IOException ioe) {
+					System.err.println("Cannot open the port on UDP");
+					ioe.printStackTrace();
+				} finally {
+					System.out.println("Closing UDP server");
+				}
+			}
+		}).start();
+	}
 }
