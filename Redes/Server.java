@@ -53,7 +53,7 @@ public class Server {
         int valor_Final = 0;
         String resultado = "";
         for (int i = 0; i < ProdutosCompras.size(); i++) {
-            resultado += ProdutosCompras.get(i) + "/";
+            resultado += ProdutosCompras.get(i).toStrinng() + "/";
             valor_Final += ProdutosCompras.get(i).getValor();
         }
         resultado += "||" + valor_Final;
@@ -73,8 +73,23 @@ public class Server {
 
 
 
-    public static void AdicionarProcuto(int idPodutor){
-        ProdutosCompras.add(produtos[idPodutor-1]);
+    public static void AdicionarProcuto(String t){
+		if(t.contains("1")){
+			ProdutosCompras.add(produtos[0]);
+		}
+		else if(t.contains("2")){
+			ProdutosCompras.add(produtos[1]);
+		}
+		else if(t.contains("3")){
+			ProdutosCompras.add(produtos[2]);
+		}
+		else if(t.contains("4")){
+			ProdutosCompras.add(produtos[3]);
+		}
+		else {
+			ProdutosCompras.add(produtos[4]);
+		}
+        
     }
 	public static void main(String[] args) {
 		// TCP
@@ -154,7 +169,7 @@ public class Server {
 						
 						String pegar =new String(packet.getData());
 						
-						//AdicionarProcuto(Integer.parseInt(pegar));
+						AdicionarProcuto(pegar);
 						
 						socket.send(packet);
 					}
